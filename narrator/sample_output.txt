@@ -1,0 +1,27 @@
+Mamaearth Returns & Growth Intelligence – Business Narrative
+
+1. Revenue Overview
+The cleaned total revenue is ₹97,358.3, compared with raw revenue of ₹99,860.2.
+The difference of ₹2,501.9 was identified during duplicate-order reconciliation.
+
+2. Return Risk by Payment Method
+COD has the highest return rate at 44.4%.
+CARD has a return rate of 14.7%, while UPI has a return rate of 18.9%.
+
+3. Highest-Risk Customer Segment
+The highest-risk segment is customers using COD in City Tier 2,
+with a return rate of 54.5%.
+
+4. Revenue Peak
+The true peak revenue month was 2026-03, with revenue of ₹20,318.9.
+
+5. Outlier Correction
+January 2026 appeared to generate ₹29,582.1 in revenue.
+After correcting the identified outlier/duplicate effect,
+the corrected revenue was ₹11,637.1.
+
+6. Business Recommendation
+The business should focus on reducing COD-related returns,
+particularly within Tier 2 cities. Duplicate-order controls and
+regular data-quality checks should also be maintained to ensure
+accurate revenue reporting.
