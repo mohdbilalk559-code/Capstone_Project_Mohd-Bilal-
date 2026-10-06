@@ -35,17 +35,47 @@ products.columns = products.columns.str.strip()
 customers.columns = customers.columns.str.strip()
 
 # --------------------------------------------------
-# 4. Remove duplicate orders
+# 4. Calculate RAW revenue before removing duplicates
 # --------------------------------------------------
 
 raw_order_count = len(orders)
+
+raw_revenue_df = orders.merge(
+    products[["product_id", "price"]],
+    on="product_id",
+    how="left"
+)
+
+raw_revenue_df["discount_pct"] = pd.to_numeric(
+    raw_revenue_df["discount_pct"],
+    errors="coerce"
+).fillna(0)
+
+raw_revenue_df["quantity"] = pd.to_numeric(
+    raw_revenue_df["quantity"],
+    errors="coerce"
+).fillna(0)
+
+raw_revenue_df["raw_revenue"] = (
+    raw_revenue_df["quantity"]
+    * raw_revenue_df["price"]
+    * (1 - raw_revenue_df["discount_pct"] / 100)
+)
+
+raw_total_revenue = round(
+    raw_revenue_df["raw_revenue"].sum(),
+    2
+)
+
+# --------------------------------------------------
+#  Remove duplicate orders
+# --------------------------------------------------
 
 orders = orders.drop_duplicates(subset="order_id")
 
 clean_order_count = len(orders)
 
 duplicate_count = raw_order_count - clean_order_count
-
 # --------------------------------------------------
 # 5. Standardize payment method
 # --------------------------------------------------
@@ -153,21 +183,6 @@ cleaned_total_revenue = round(
     df["revenue"].sum(), 2
 )
 
-raw_total_revenue = round(
-    orders.merge(
-        products[["product_id", "price"]],
-        on="product_id",
-        how="left"
-    )
-    .assign(
-        raw_revenue=lambda x:
-        x["quantity"]
-        * x["price"]
-        * (1 - x["discount_pct"] / 100)
-    )["raw_revenue"]
-    .sum(),
-    2
-)
 
 duplicate_reconciliation_delta = round(
     raw_total_revenue - cleaned_total_revenue,
