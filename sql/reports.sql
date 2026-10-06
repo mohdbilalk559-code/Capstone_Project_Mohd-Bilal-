@@ -86,7 +86,6 @@ ORDER BY acquisition_source;
 
 ALTER TABLE customers ADD COLUMN loyalty_tier VARCHAR(10);
 
-ALTER TABLE customers ADD COLUMN loyalty_tier VARCHAR(10);
 
 UPDATE customers 
 SET loyalty_tier = CASE 
